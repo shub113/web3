@@ -13,9 +13,12 @@ export function AppLayout() {
 
     return (
         <div className='min-h-screen'>
-            <div className='flex gap-3'>
+            <div className='flex'>
                 <Navbar />
-                <Outlet />
+
+                <div className='bg-pink-100 grow'>
+                    <Outlet />
+                </div>
             </div>
         </div>
     );

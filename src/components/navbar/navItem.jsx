@@ -11,7 +11,6 @@ export function NavItem({ navdata = {} }) {
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    console.log(location);
 
     const [isMenuExpanded, setIsMenuExpanded] = useState(false);
 
