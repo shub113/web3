@@ -2,7 +2,15 @@
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                sideNavBar: "#101828",
+            },
+            containers: {
+                "2xs": "15rem",
+                "3xs": "10rem",
+            },
+        },
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/container-queries")],
 };
