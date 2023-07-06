@@ -1,6 +1,5 @@
 import { useState, memo } from "react";
 import { twMerge } from "tailwind-merge";
-
 import { AiOutlineHome } from "react-icons/ai";
 import { LiaBarsSolid } from "react-icons/lia";
 
@@ -33,7 +32,7 @@ function NavbarComponent() {
                     </div>
                 </div>
                 <hr className='border-black' />
-                <div className='bg-pink-700 @container'>
+                <div className='@container'>
                     {NavList.map((navdata) => (
                         <NavItem key={navdata.id} navdata={navdata} />
                     ))}
