@@ -1,6 +1,6 @@
 import { AiOutlineUser } from "react-icons/ai";
 
-export function MetamaskHeader() {
+export function Header() {
     return (
         <div>
             <div className='flex justify-between items-center py-3 px-12'>
