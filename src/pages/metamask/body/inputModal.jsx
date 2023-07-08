@@ -44,6 +44,7 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
             .then((accounts) => {
                 setConnectionError(false);
                 updateWallet(accounts);
+                setShowModal(false);
             })
             .catch((err) => {
                 setConnectionError(true);
@@ -76,7 +77,7 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
                     />
                 </div>
                 <div className='flex gap-3 items-center  '>
-                    Name :{" "}
+                    Name :
                     <Input
                         name='name'
                         onChange={onChange}
