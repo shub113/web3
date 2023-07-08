@@ -7,6 +7,9 @@ import { initialUserState } from "./body";
 
 export function InputModal({ user, setUser, updateWallet, setShowModal }) {
     const [error, setError] = useState(initialUserState);
+    const [isConnecting, setIsConnecting] = useState(false); /* New */
+    const [connectionError, setConnectionError] = useState(false); /* New */
+    const [errorMessage, setErrorMessage] = useState(""); /* New */
 
     useLayoutEffect(() => {
         setUser(initialUserState);
@@ -33,11 +36,20 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
         if (error.email !== "" || error.name !== "") {
             return;
         }
-        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-        });
-        updateWallet(accounts);
-        setShowModal(false);
+        setIsConnecting(true);
+        await window.ethereum
+            .request({
+                method: "eth_requestAccounts",
+            })
+            .then((accounts) => {
+                setConnectionError(false);
+                updateWallet(accounts);
+            })
+            .catch((err) => {
+                setConnectionError(true);
+                setErrorMessage(err.message);
+            });
+        setIsConnecting(false);
     };
 
     return (
@@ -92,6 +104,11 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
                         Connect
                     </Button>
                 </div>
+                {connectionError && (
+                    <div className='text-red-700'>
+                        <strong>Connection error:</strong> {errorMessage}
+                    </div>
+                )}
             </div>
         </Modal>
     );

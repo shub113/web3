@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
-import { Button, Banner } from "../../../components/index";
+import { Button, Banner, Spinner } from "../../../components/index";
 import { InputModal } from "./inputModal";
+// import { formatBalance, formatChainAsNum } from "../../../modules/helper";
 
-const initialWalletState = { accounts: [] };
+const initialWalletState = { accounts: [], balance: "", chainId: "" };
 
 export const initialUserState = { name: "", email: "" };
 
@@ -15,6 +16,9 @@ export function Body() {
     const [wallet, setWallet] = useState(initialWalletState);
     const [showModal, setShowModal] = useState(false);
     const [user, setUser] = useState(initialUserState);
+    const [isConnecting, setIsConnecting] = useState(false);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const hasAccounts = (wallet?.accounts.length ?? 0) > 0;
 
@@ -25,20 +29,42 @@ export function Body() {
             if (accounts.length > 0) {
                 updateWallet(accounts);
             } else {
-                // if length 0, user is disconnected
                 setWallet(initialWalletState);
             }
         };
+
+        const refreshChain = (chainId) => {
+            setWallet((prev) => ({ ...prev, chainId }));
+        };
+
         const getProvider = async () => {
             const provider = await detectEthereumProvider({ silent: true });
             setHasProvider(Boolean(provider));
+
+            if (provider) {
+                const accounts = await window.ethereum.request({ method: "eth_accounts" });
+                refreshAccounts(accounts);
+                window.ethereum.on("accountsChanged", refreshAccounts);
+                window.ethereum.on("chainChanged", refreshChain);
+            }
         };
 
         getProvider();
+        return () => {
+            window.ethereum?.removeListener("accountsChanged", refreshAccounts);
+            window.ethereum?.removeListener("chainChanged", refreshChain);
+        };
     }, []);
 
     const updateWallet = async (accounts) => {
-        setWallet({ accounts });
+        const balance = await window?.ethereum?.request({
+            method: "eth_getBalance",
+            params: [accounts[0], "latest"],
+        });
+        const chainId = await window?.ethereum?.request({
+            method: "eth_chainId",
+        });
+        setWallet({ accounts, balance, chainId });
     };
 
     return (
@@ -58,7 +84,7 @@ export function Body() {
                 {hasProvider ? <AiFillCheckCircle size={20} /> : <BiErrorCircle size={20} />}
                 Browser does {hasProvider ? "" : "not"} have metamask extension.
             </Banner>
-            {hasProvider && (
+            {window.ethereum?.isMetaMask && !hasAccounts && (
                 <Button
                     onClick={() => {
                         setShowModal(true);
@@ -70,14 +96,14 @@ export function Body() {
             {hasAccounts && (
                 <div className='mt-10'>
                     Hi {user.name} ({user.email})
-                    {wallet.accounts.map((account) => (
-                        <div
-                            key={account}
-                            className='border-2 border-gray-400 rounded-xl p-3 my-3 bg-gray-300'
-                        >
-                            Account address : {account}
-                        </div>
-                    ))}
+                    <div className='border-2 border-gray-400 rounded-xl p-3 my-3 bg-gray-300'>
+                        {wallet.accounts.map((account) => (
+                            <Fragment key={{ account }}> Account address : {account}</Fragment>
+                        ))}
+                        <div>Wallet Balance: {wallet.balance}</div> {/* New */}
+                        <div>Hex ChainId: {wallet.chainId}</div> {/* New */}
+                        <div>Numeric ChainId: {wallet.chainId}</div>
+                    </div>
                 </div>
             )}
         </div>
