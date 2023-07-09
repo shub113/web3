@@ -4,12 +4,12 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Button, Modal, Input, Spinner } from "../../../components/index";
 import { isValidEmail, isValidName } from "../../../modules/helper";
 import { initialUserState } from "./body";
+import { useMetaMask } from "../../../hooks/useMetamask";
 
-export function InputModal({ user, setUser, updateWallet, setShowModal }) {
+export function InputModal({ user, setUser, setShowModal }) {
+    const { isConnecting, connectMetaMask, errorMessage, clearError } = useMetaMask();
+
     const [error, setError] = useState(initialUserState);
-    const [isConnecting, setIsConnecting] = useState(false);
-    const [connectionError, setConnectionError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     useLayoutEffect(() => {
         setUser(initialUserState);
@@ -33,26 +33,16 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
     };
 
     const handleConnect = async () => {
-        if (connectionError) {
-            setConnectionError(false);
+        if (errorMessage) {
+            clearError();
         }
         if (error.email !== "" || error.name !== "") {
             return;
         }
-        setIsConnecting(true);
-        await window.ethereum
-            .request({
-                method: "eth_requestAccounts",
-            })
-            .then((accounts) => {
-                updateWallet(accounts);
-                setShowModal(false);
-            })
-            .catch((err) => {
-                setConnectionError(true);
-                setErrorMessage(err.message);
-            });
-        setIsConnecting(false);
+        await connectMetaMask();
+        if (errorMessage) {
+            setShowModal(false);
+        }
     };
 
     return (
@@ -113,7 +103,7 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
                         Connect
                     </Button>
                 </div>
-                {connectionError && (
+                {errorMessage && (
                     <div className='text-red-700'>
                         <strong>Connection error:</strong> {errorMessage}
                     </div>

@@ -10,7 +10,6 @@ export function AppLayout() {
     useEffect(() => {
         // navigate(NavList?.[0]?.path ?? "/");
     }, []);
-
     return (
         <div className='min-h-screen'>
             <div className='flex'>
