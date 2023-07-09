@@ -1,9 +1,9 @@
 import { useState, useEffect, Fragment } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
-import { AiFillCheckCircle } from "react-icons/ai";
+import { AiFillCheckCircle, AiOutlineCopy } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
-import { Button, Banner, Spinner } from "../../../components/index";
+import { Button, Banner } from "../../../components/index";
 import { InputModal } from "./inputModal";
 // import { formatBalance, formatChainAsNum } from "../../../modules/helper";
 
@@ -16,13 +16,8 @@ export function Body() {
     const [wallet, setWallet] = useState(initialWalletState);
     const [showModal, setShowModal] = useState(false);
     const [user, setUser] = useState(initialUserState);
-    const [isConnecting, setIsConnecting] = useState(false);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
     const hasAccounts = (wallet?.accounts.length ?? 0) > 0;
-
-    console.log("####", { wallet, user });
 
     useEffect(() => {
         const refreshAccounts = (accounts) => {
@@ -98,7 +93,16 @@ export function Body() {
                     Hi {user.name} ({user.email})
                     <div className='border-2 border-gray-400 rounded-xl p-3 my-3 bg-gray-300'>
                         {wallet.accounts.map((account) => (
-                            <Fragment key={{ account }}> Account address : {account}</Fragment>
+                            <div className='flex items-center gap-4' key={{ account }}>
+                                Account address : {account}
+                                <AiOutlineCopy
+                                    className='cursor-pointer'
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(account);
+                                    }}
+                                    size={20}
+                                />
+                            </div>
                         ))}
                         <div>Wallet Balance: {wallet.balance}</div> {/* New */}
                         <div>Hex ChainId: {wallet.chainId}</div> {/* New */}

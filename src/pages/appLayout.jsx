@@ -8,7 +8,7 @@ export function AppLayout() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        navigate(NavList?.[0]?.path ?? "/");
+        // navigate(NavList?.[0]?.path ?? "/");
     }, []);
 
     return (

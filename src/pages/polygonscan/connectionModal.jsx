@@ -1,51 +1,44 @@
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-import { Button, Modal, Input, Spinner } from "../../../components/index";
-import { isValidEmail, isValidName } from "../../../modules/helper";
-import { initialUserState } from "./body";
+import { Button, Modal, Input, Spinner, NA } from "../../components/index";
 
-export function InputModal({ user, setUser, updateWallet, setShowModal }) {
-    const [error, setError] = useState(initialUserState);
+export function ConnectionModal({ setShowModal, setBalance }) {
+    const [address, setAddress] = useState("");
+    const [error, setError] = useState("");
     const [isConnecting, setIsConnecting] = useState(false);
     const [connectionError, setConnectionError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
-    useLayoutEffect(() => {
-        setUser(initialUserState);
-    }, []);
-
-    const onEmailBlur = (event) => {
-        if (!isValidEmail(event.target.value)) {
-            setError((prev) => ({ ...prev, email: "Invalid email" }));
-        }
-    };
-
-    const onNameBlur = (event) => {
-        if (!isValidName(event.target.value)) {
-            setError((prev) => ({ ...prev, name: "Enter first and last name, with space separated!" }));
-        }
-    };
-
-    const onChange = (event) => {
-        setError((prev) => ({ ...prev, [event.target.name]: "" }));
-        setUser((prev) => ({ ...prev, [event.target.name]: event.target.value }));
-    };
 
     const handleConnect = async () => {
         if (connectionError) {
             setConnectionError(false);
         }
-        if (error.email !== "" || error.name !== "") {
+        if (!address) {
+            setError("Address cannot be empty!");
             return;
         }
         setIsConnecting(true);
-        await window.ethereum
-            .request({
-                method: "eth_requestAccounts",
-            })
-            .then((accounts) => {
-                updateWallet(accounts);
+        await fetch(
+            `https://api.polygonscan.com/api
+        ?module=account
+        &action=balance
+        &address=${address}
+        &apikey=${import.meta.env.VITE_PLOYSCAN_API_KEY}`,
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                setConnectionError(true);
+                if ((res?.status ?? "0") === "0") {
+                    setErrorMessage(res?.result ?? "Error");
+                    return;
+                }
+                setBalance(res?.result ?? <NA />);
                 setShowModal(false);
             })
             .catch((err) => {
@@ -57,7 +50,7 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
 
     return (
         <Modal>
-            <div className='grid gap-4 '>
+            <div className='grid gap-4 overflow-auto'>
                 <div className='relative '>
                     <div className='font-bold text-xl grid place-items-center mb-5'>Enter Details</div>
                     <div className='absolute right-0 top-0 '>
@@ -73,25 +66,15 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
                         </div>
                     )}
                 </div>
-
                 <div className='flex gap-3 items-center  '>
-                    EMAIL :
+                    ADDRESS :
                     <Input
                         name='email'
-                        onChange={onChange}
-                        value={user?.email}
-                        errorText={error?.email}
-                        onBlur={onEmailBlur}
-                    />
-                </div>
-                <div className='flex gap-3 items-center  '>
-                    Name :
-                    <Input
-                        name='name'
-                        onChange={onChange}
-                        value={user?.name}
-                        errorText={error?.name}
-                        onBlur={onNameBlur}
+                        onChange={(event) => {
+                            setAddress(event.target.value);
+                        }}
+                        value={address}
+                        errorText={error}
                     />
                 </div>
                 <div className='flex justify-between '>
@@ -104,9 +87,7 @@ export function InputModal({ user, setUser, updateWallet, setShowModal }) {
                         Close
                     </Button>
                     <Button
-                        disabled={
-                            error.email !== "" || error.name !== "" || user.email === "" || user.name === ""
-                        }
+                        // disabled={address === ""}
                         buttonStyle='bg-green-500 hover:bg-green-700 w-40 mt-5'
                         onClick={handleConnect}
                     >

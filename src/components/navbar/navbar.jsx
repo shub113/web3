@@ -9,12 +9,12 @@ import { NavList } from "./navList";
 function NavbarComponent() {
     const [isNavFixed, setIsNavFixed] = useState(false);
 
-    const parentClass = twMerge("group relative h-screen w-[5rem] break-all", isNavFixed && "w-[15rem]");
+    const parentClass = twMerge("group relative min-h-screen w-[5rem] break-all", isNavFixed && "w-[15rem]");
 
     return (
         <div className={parentClass}>
             <div
-                className='absolute h-full max-h-screen w-full max-w-[15rem] overflow-auto border-r-2 bg-pink-700 
+                className='absolute h-full w-full max-w-[15rem] overflow-auto border-r-2 bg-pink-700 
             transition-[width] duration-300 ease-in-out @container hover:z-50 hover:w-[15rem]'
             >
                 <div className='grid grid-cols-1 px-4 py-2 @3xs:grid-cols-[3rem_minmax(7rem,_1fr)]'>

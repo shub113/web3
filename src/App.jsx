@@ -7,7 +7,7 @@ import { Spinner } from "./components/index";
 
 const PageLoader = (
     <div className='flex h-screen w-screen items-center justify-center bg-stone-400'>
-        <Spinner />
+        <Spinner style='mr-2' />
         Loading...
     </div>
 );
