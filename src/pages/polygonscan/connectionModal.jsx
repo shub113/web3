@@ -79,7 +79,7 @@ export function ConnectionModal({ setShowModal, setBalance }) {
                 </div>
                 <div className='flex justify-between '>
                     <Button
-                        buttonStyle='w-40 mt-5'
+                        buttonStyle='w-40 mt-5 mr-3'
                         onClick={() => {
                             setShowModal(false);
                         }}

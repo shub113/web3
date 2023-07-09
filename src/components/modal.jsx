@@ -5,7 +5,7 @@ export function Modal({ children }) {
 
             <div className='fixed inset-0 z-10'>
                 <div className='flex min-h-full justify-center items-center p-4 text-center '>
-                    <div className='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[30vw] p-5 '>
+                    <div className='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all p-5 '>
                         <div className='bg-white'>{children}</div>
                     </div>
                 </div>
