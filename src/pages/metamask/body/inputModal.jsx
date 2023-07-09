@@ -39,10 +39,11 @@ export function InputModal({ user, setUser, setShowModal }) {
         if (error.email !== "" || error.name !== "") {
             return;
         }
-        await connectMetaMask();
-        if (errorMessage) {
+        await connectMetaMask(() => {
+            localStorage.setItem("email", user?.email ?? "");
+            localStorage.setItem("name", user?.name ?? "");
             setShowModal(false);
-        }
+        });
     };
 
     return (

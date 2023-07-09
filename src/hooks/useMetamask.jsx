@@ -60,7 +60,7 @@ export const MetaMaskContextProvider = ({ children }) => {
         };
     }, [updateWallet, updateWalletAndAccounts]);
 
-    const connectMetaMask = async () => {
+    const connectMetaMask = async (successCallback = () => {}) => {
         setIsConnecting(true);
 
         try {
@@ -69,6 +69,7 @@ export const MetaMaskContextProvider = ({ children }) => {
             });
             clearError();
             updateWallet(accounts);
+            successCallback();
         } catch (err) {
             setErrorMessage(err.message);
         }

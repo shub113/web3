@@ -1,13 +1,11 @@
-import { useState, useEffect, Fragment } from "react";
-import detectEthereumProvider from "@metamask/detect-provider";
+import { useState, useEffect } from "react";
 import { AiFillCheckCircle, AiOutlineCopy } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
 import { Button, Banner } from "../../../components/index";
 import { InputModal } from "./inputModal";
 import { useMetaMask } from "../../../hooks/useMetamask";
-
-const initialWalletState = { accounts: [], balance: "", chainId: "" };
+import { localStorageItems } from "../../../modules/constants";
 
 export const initialUserState = { name: "", email: "" };
 
@@ -18,6 +16,14 @@ export function Body() {
     const [user, setUser] = useState(initialUserState);
 
     const hasAccounts = (wallet?.accounts.length ?? 0) > 0;
+
+    useEffect(() => {
+        const name = localStorage.getItem(localStorageItems.NAME);
+        const email = localStorage.getItem(localStorageItems.EMAIL);
+        if (name && email) {
+            setUser({ email, name });
+        }
+    }, []);
 
     return (
         <div className='py-3 px-12'>
