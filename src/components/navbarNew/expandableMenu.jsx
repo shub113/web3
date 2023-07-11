@@ -1,12 +1,10 @@
-import { useState, memo } from "react";
+import { memo } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { twMerge } from "tailwind-merge";
 
 import { NA } from "../index";
 
-export const ExpandableMenu = memo(({ expanded, setExpanded, menu }) => {
-    const [selectedMenu, setSelectedMenu] = useState({ id: "" });
-
+export const ExpandableMenu = memo(({ menu, expanded, setExpanded, selectedMenu, setSelectedMenu }) => {
     return (
         <div className='p-3 border-b-2'>
             <div
@@ -32,7 +30,7 @@ export const ExpandableMenu = memo(({ expanded, setExpanded, menu }) => {
                 <div className='mt-4'>
                     {menu.children.map(({ id, Icon, title }) => {
                         const subMenuClass = twMerge(
-                            "flex justify-start items-center p-2 my-1 hover:bg-slate-300 cursor-pointer rounded-md",
+                            "flex justify-start items-center p-2 my-1 hover:bg-stone-300 cursor-pointer rounded-md",
                             selectedMenu.id === id && "bg-stone-400"
                         );
                         const iconClass = twMerge("mr-4", selectedMenu.id === id && "text-red-900");

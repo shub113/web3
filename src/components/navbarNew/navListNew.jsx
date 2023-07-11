@@ -12,6 +12,8 @@ import { BsDot } from "react-icons/bs";
 import { HiInformationCircle } from "react-icons/hi";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineIntegrationInstructions, MdOutlineGeneratingTokens } from "react-icons/md";
+import { FiUsers } from "react-icons/fi";
+import { MdOutlineSettingsSuggest, MdHealthAndSafety } from "react-icons/md";
 
 import { SideSubmenu } from "./sideSubmenu";
 
@@ -122,5 +124,23 @@ export const ExpandableMenuItems = [
         id: "production",
         title: "Production",
         children: productionExpandedMenu,
+    },
+];
+
+export const FooterMenuItems = [
+    {
+        id: "teams",
+        title: "Teams",
+        Icon: FiUsers,
+    },
+    {
+        id: "configure",
+        title: "Configure",
+        Icon: MdOutlineSettingsSuggest,
+    },
+    {
+        id: "health",
+        title: "Health",
+        Icon: MdHealthAndSafety,
     },
 ];
