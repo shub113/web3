@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { NavListMenuItems, NavListFooterItems } from "./navListNew";
 import { NA } from "../index";
@@ -7,10 +8,19 @@ import { NA } from "../index";
 const menuItemsLength = NavListMenuItems?.length ?? 0;
 
 export function NavbarNew() {
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+
     const [selectedItem, setSelectedItem] = useState({
-        menuIndex: 0,
+        id: NavListMenuItems?.[0]?.id,
         menuComponent: NavListMenuItems?.[0]?.component ?? <NA />,
     });
+
+    useEffect(() => {
+        const pathArray = pathname.split("/");
+        const selectedItem = NavListMenuItems.filter((item) => item.path === (pathArray?.[1] ?? ""));
+        setSelectedItem({ id: selectedItem?.[0]?.id, menuComponent: selectedItem?.[0]?.component });
+    }, []);
 
     return (
         <div className='w-[15rem] border-r-2 flex '>
@@ -20,7 +30,7 @@ export function NavbarNew() {
                         {NavListMenuItems.map((item, index) => {
                             const menuItemClass = twMerge(
                                 " py-3.5 my-3 w-full grid place-items-center cursor-pointer ",
-                                selectedItem.menuIndex === index && "bg-red-800",
+                                selectedItem.id === item.id && "bg-red-800",
                                 index === 0 && "mt-0"
                             );
 
@@ -28,7 +38,8 @@ export function NavbarNew() {
                                 <div
                                     key={item.id}
                                     onClick={() => {
-                                        setSelectedItem({ menuIndex: index, menuComponent: item.component });
+                                        navigate(item.path);
+                                        setSelectedItem({ id: item.id, menuComponent: item.component });
                                     }}
                                     className={menuItemClass}
                                 >
@@ -38,10 +49,10 @@ export function NavbarNew() {
                         })}
                     </div>
                     <div id='footer' className='w-full '>
-                        {NavListFooterItems.map((item, index) => {
+                        {NavListFooterItems.map((item) => {
                             const menuItemClass = twMerge(
                                 " py-3 w-full grid place-items-center cursor-pointer ",
-                                selectedItem.menuIndex === index + menuItemsLength && "bg-red-800"
+                                selectedItem.id === item.id && "bg-red-800"
                             );
 
                             return (
@@ -49,7 +60,7 @@ export function NavbarNew() {
                                     key={item.id}
                                     onClick={() => {
                                         setSelectedItem({
-                                            menuIndex: index + menuItemsLength,
+                                            id: item.id,
                                             menuComponent: item.component,
                                         });
                                     }}

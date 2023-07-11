@@ -23,18 +23,21 @@ export const NavListMenuItems = [
         title: "Menu 1",
         Icon: <AiOutlineHome size={20} className='text-white' />,
         component: <div>Menu 1</div>,
+        path: "menu1",
     },
     {
         id: "menu2",
         title: "Menu 2",
         Icon: <TfiWorld size={17} className='text-white' />,
         component: <div>Menu 2</div>,
+        path: "menu2",
     },
     {
-        id: "menu3",
-        title: "Menu 3",
+        id: "services",
+        title: "Services",
         Icon: <AiOutlineDollarCircle size={20} className='text-white' />,
         component: <SideSubmenu />,
+        path: "services",
     },
 ];
 
@@ -63,16 +66,19 @@ export const genericExpandedMenu = [
         id: "chain_subMenu_1",
         title: "Sub menu 1",
         Icon: HiInformationCircle,
+        path: "services/sub_menu_1",
     },
     {
         id: "chain_subMenu_2",
         title: "Sub menu 2",
         Icon: HiInformationCircle,
+        path: "sservices/ub_menu_2",
     },
     {
         id: "chain_subMenu_3",
-        title: "Sub menu 3",
+        title: "services/Sub menu 3",
         Icon: HiInformationCircle,
+        path: "services/sub_menu_3",
     },
 ];
 
@@ -81,31 +87,37 @@ const productionExpandedMenu = [
         id: "dashboard",
         title: "Dashboard",
         Icon: LuLayoutDashboard,
+        path: "services/dashboard",
     },
     {
         id: "settings",
         title: "Settings",
         Icon: AiOutlineSetting,
+        path: "services/settings",
     },
     {
         id: "api_integration",
         title: "API Integration",
         Icon: MdOutlineIntegrationInstructions,
+        path: "services/integration",
     },
     {
         id: "tokens",
         title: "Tokens",
         Icon: MdOutlineGeneratingTokens,
+        path: "services/tokens",
     },
     {
         id: "markets",
         title: "Markets",
         Icon: AiOutlineStock,
+        path: "services/markets",
     },
     {
         id: "issue",
         title: "Issue",
         Icon: AiFillStar,
+        path: "services/issue",
     },
 ];
 
@@ -132,15 +144,18 @@ export const FooterMenuItems = [
         id: "teams",
         title: "Teams",
         Icon: FiUsers,
+        path: "services/teams",
     },
     {
         id: "configure",
         title: "Configure",
         Icon: MdOutlineSettingsSuggest,
+        path: "services/configure",
     },
     {
         id: "health",
         title: "Health",
         Icon: MdHealthAndSafety,
+        path: "services/health",
     },
 ];

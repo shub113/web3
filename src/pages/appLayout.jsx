@@ -8,9 +8,9 @@ export function AppLayout() {
             <div className='flex'>
                 <NavbarNew />
 
-                {/* <div className='bg-pink-100 grow'>
+                <div className='bg-pink-100 grow'>
                     <Outlet />
-                </div> */}
+                </div>
             </div>
         </div>
     );
