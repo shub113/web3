@@ -44,7 +44,7 @@ export const NavListMenuItems = [
 export const NavListFooterItems = [
     {
         id: "menu4",
-        title: "PolygonScan",
+        title: "Menu 4",
         Icon: (
             <div className='relative'>
                 <BsDot size={40} className='text-red-600 absolute bottom-0' />
@@ -56,7 +56,7 @@ export const NavListFooterItems = [
     },
     {
         id: "menu5",
-        title: "PolygonScan",
+        title: "Menu 5",
         Icon: <BiSolidUser size={20} className='text-white' />,
         component: <div>Menu 5</div>,
         path: "menu5",

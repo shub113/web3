@@ -5,8 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { NavListMenuItems, NavListFooterItems } from "./navListNew";
 import { NA } from "../index";
 
-const menuItemsLength = NavListMenuItems?.length ?? 0;
-
 export function NavbarNew() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -18,8 +16,18 @@ export function NavbarNew() {
 
     useEffect(() => {
         const pathArray = pathname.split("/");
-        const selectedItem = NavListMenuItems.filter((item) => item.path === (pathArray?.[1] ?? ""));
+        let selectedItem = NavListMenuItems.filter((item) => {
+            if (pathArray[2]) {
+                return item.path === `${pathArray?.[1]}/${pathArray?.[2]}`;
+            }
+
+            return item.path === pathArray?.[1];
+        });
+        if (selectedItem.length === 0) {
+            selectedItem = NavListFooterItems.filter((item) => item.path === pathArray?.[1]);
+        }
         setSelectedItem({ id: selectedItem?.[0]?.id, menuComponent: selectedItem?.[0]?.component });
+        console.log("###", { pathArray, selectedItem, NavListMenuItems, NavListFooterItems });
     }, []);
 
     return (

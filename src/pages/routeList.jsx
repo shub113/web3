@@ -28,6 +28,8 @@ export const RouteList = () => (
                 <Route path='dashboard' element={<Metamask />} />
                 <Route path='tokens' element={<Polygonscan />} />
             </Route>
+            <Route path='menu4' element={<div>Menu page 4</div>} />
+            <Route path='menu5' element={<div>Menu page 5</div>} />
 
             <Route path='*' element={<NoPathFound />} />
         </Route>
