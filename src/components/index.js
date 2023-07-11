@@ -4,5 +4,6 @@ export { Modal } from "./modal";
 export { Input } from "./input";
 export { NA } from "./na";
 export { Navbar } from "./navbar/navbar";
+export { NavbarNew } from "./navbarNew/navbarNew";
 export { NavList } from "./navbar/navList";
 export { Banner } from "./banner";
