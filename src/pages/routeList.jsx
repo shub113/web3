@@ -26,9 +26,9 @@ export const RouteList = () => (
                 }
             >
                 <Route path='dashboard' element={<Metamask />} />
+                <Route path='tokens' element={<Polygonscan />} />
             </Route>
 
-            <Route path='polygonscan' element={<Polygonscan />} />
             <Route path='*' element={<NoPathFound />} />
         </Route>
     </Routes>

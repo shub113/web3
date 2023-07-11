@@ -59,6 +59,7 @@ export function NavbarNew() {
                                 <div
                                     key={item.id}
                                     onClick={() => {
+                                        navigate(item.path);
                                         setSelectedItem({
                                             id: item.id,
                                             menuComponent: item.component,

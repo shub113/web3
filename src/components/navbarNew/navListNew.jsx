@@ -37,7 +37,7 @@ export const NavListMenuItems = [
         title: "Services",
         Icon: <AiOutlineDollarCircle size={20} className='text-white' />,
         component: <SideSubmenu />,
-        path: "services",
+        path: "services/dashboard",
     },
 ];
 
@@ -52,12 +52,14 @@ export const NavListFooterItems = [
             </div>
         ),
         component: <div>Menu 4</div>,
+        path: "menu4",
     },
     {
         id: "menu5",
         title: "PolygonScan",
         Icon: <BiSolidUser size={20} className='text-white' />,
         component: <div>Menu 5</div>,
+        path: "menu5",
     },
 ];
 
