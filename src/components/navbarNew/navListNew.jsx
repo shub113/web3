@@ -1,8 +1,17 @@
-import { AiOutlineHome, AiOutlineDollarCircle, AiOutlineBell } from "react-icons/ai";
+import {
+    AiOutlineHome,
+    AiOutlineDollarCircle,
+    AiOutlineBell,
+    AiOutlineSetting,
+    AiOutlineStock,
+    AiFillStar,
+} from "react-icons/ai";
 import { TfiWorld } from "react-icons/tfi";
 import { BiSolidUser } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { HiInformationCircle } from "react-icons/hi";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { MdOutlineIntegrationInstructions, MdOutlineGeneratingTokens } from "react-icons/md";
 
 import { SideSubmenu } from "./sideSubmenu";
 
@@ -47,7 +56,7 @@ export const NavListFooterItems = [
     },
 ];
 
-export const ChainSubMenu = [
+export const genericExpandedMenu = [
     {
         id: "chain_subMenu_1",
         title: "Sub menu 1",
@@ -62,5 +71,56 @@ export const ChainSubMenu = [
         id: "chain_subMenu_3",
         title: "Sub menu 3",
         Icon: HiInformationCircle,
+    },
+];
+
+const productionExpandedMenu = [
+    {
+        id: "dashboard",
+        title: "Dashboard",
+        Icon: LuLayoutDashboard,
+    },
+    {
+        id: "settings",
+        title: "Settings",
+        Icon: AiOutlineSetting,
+    },
+    {
+        id: "api_integration",
+        title: "API Integration",
+        Icon: MdOutlineIntegrationInstructions,
+    },
+    {
+        id: "tokens",
+        title: "Tokens",
+        Icon: MdOutlineGeneratingTokens,
+    },
+    {
+        id: "markets",
+        title: "Markets",
+        Icon: AiOutlineStock,
+    },
+    {
+        id: "issue",
+        title: "Issue",
+        Icon: AiFillStar,
+    },
+];
+
+export const ExpandableMenuItems = [
+    {
+        id: "chain",
+        title: "Chain",
+        children: genericExpandedMenu,
+    },
+    {
+        id: "environment",
+        title: "Environment",
+        children: genericExpandedMenu,
+    },
+    {
+        id: "production",
+        title: "Production",
+        children: productionExpandedMenu,
     },
 ];

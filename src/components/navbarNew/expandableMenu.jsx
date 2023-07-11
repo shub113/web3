@@ -1,23 +1,36 @@
-export function ExpandedMenu({}) {
+import { useState, memo } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { twMerge } from "tailwind-merge";
+
+import { NA } from "../index";
+
+export const ExpandableMenu = memo(({ expanded, setExpanded, menu }) => {
+    const [selectedMenu, setSelectedMenu] = useState({ id: "" });
+
     return (
         <div className='p-3 border-b-2'>
             <div
                 onClick={() => {
-                    setExpanded((prev) => ({ id: "environment", state: !prev.state }));
+                    if (expanded.id === menu.id) {
+                        setExpanded((prev) => ({ id: menu.id, state: !prev.state }));
+                        return;
+                    }
+                    setExpanded({ id: menu.id, state: true });
+                    setSelectedMenu({ id: "" });
                 }}
                 className='flex items-center justify-between cursor-pointer'
             >
-                <span>Environment</span>
-                {expanded.id === "environment" && expanded.state ? (
+                <span>{menu?.title ?? <NA />}</span>
+                {expanded.id === menu.id && expanded.state ? (
                     <IoIosArrowUp size={20} />
                 ) : (
                     <IoIosArrowDown size={20} />
                 )}
             </div>
 
-            {expanded.id === "environment" && expanded.state && (
+            {expanded.id === menu.id && expanded.state && (
                 <div className='mt-4'>
-                    {ChainSubMenu.map(({ Icon, id, title }) => {
+                    {menu.children.map(({ id, Icon, title }) => {
                         const subMenuClass = twMerge(
                             "flex justify-start items-center p-2 my-1 hover:bg-slate-300 cursor-pointer rounded-md",
                             selectedMenu.id === id && "bg-stone-400"
@@ -41,4 +54,4 @@ export function ExpandedMenu({}) {
             )}
         </div>
     );
-}
+});
