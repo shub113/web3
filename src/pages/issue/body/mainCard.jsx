@@ -12,7 +12,7 @@ const Button = ({ children }) => {
 
 export function MainCard() {
     return (
-        <div className='text-sm'>
+        <div className=' mb-5'>
             <span className='text-red-900 font-semibold  '>Unlisted Equity Token </span>
             <Card>
                 <div className='flex justify-start items-center gap-3 border-b-2 px-4 pb-2 my-3'>
