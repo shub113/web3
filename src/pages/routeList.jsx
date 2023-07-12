@@ -17,17 +17,9 @@ export const RouteList = () => (
             <Route index element={<Home />} />
             <Route path='menu1' element={<div>Menu page 1</div>} />
             <Route path='menu2' element={<div>Menu page 2</div>} />
-            <Route
-                path='services'
-                element={
-                    <div>
-                        <Outlet />
-                    </div>
-                }
-            >
-                <Route path='dashboard' element={<Metamask />} />
-                <Route path='tokens' element={<Polygonscan />} />
-            </Route>
+            <Route path='services' element={<div>Service page</div>} />
+            <Route path='dashboard' element={<Metamask />} />
+            <Route path='tokens' element={<Polygonscan />} />
             <Route path='menu4' element={<div>Menu page 4</div>} />
             <Route path='menu5' element={<div>Menu page 5</div>} />
 

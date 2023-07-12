@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { twMerge } from "tailwind-merge";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 
 import { NA } from "../index";
 
@@ -30,7 +30,7 @@ export const ExpandableMenu = memo(({ menu, expanded, setExpanded, selectedMenu,
 
             {expanded.id === menu.id && expanded.state && (
                 <div className='mt-4'>
-                    {menu.children.map(({ id, Icon, title, path }) => {
+                    {menu.children.map(({ id, Icon, title, path, rootMenuId }) => {
                         const subMenuClass = twMerge(
                             "flex justify-start items-center p-2 my-1 hover:bg-stone-300 cursor-pointer rounded-md",
                             selectedMenu.id === id && "bg-stone-400"
@@ -40,7 +40,10 @@ export const ExpandableMenu = memo(({ menu, expanded, setExpanded, selectedMenu,
                         return (
                             <div
                                 onClick={() => {
-                                    navigate(path);
+                                    navigate({
+                                        pathname: path,
+                                        search: createSearchParams({ rootMenuId }).toString(),
+                                    });
                                     setSelectedMenu({ id });
                                 }}
                                 key={id}

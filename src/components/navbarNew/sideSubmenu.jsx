@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiFillAlipaySquare } from "react-icons/ai";
 import { FaFlagUsa } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 
 import { ExpandableMenu } from "./expandableMenu";
 import { ExpandableMenuItems } from "./navListNew";
@@ -10,8 +10,8 @@ import { FooterMenuItems } from "./navListNew";
 
 export function SideSubmenu() {
     const navigate = useNavigate();
-    const [expanded, setExpanded] = useState({ id: "production", state: true });
-    const [selectedMenu, setSelectedMenu] = useState({ id: "dashboard" });
+    const [expanded, setExpanded] = useState({ id: "", state: false });
+    const [selectedMenu, setSelectedMenu] = useState({ id: "" });
 
     return (
         <div className='text-slate-500  '>
@@ -43,7 +43,7 @@ export function SideSubmenu() {
                 })}
 
                 <div id='footer_side_menu' className='p-3'>
-                    {FooterMenuItems.map(({ id, Icon, title, path }) => {
+                    {FooterMenuItems.map(({ id, Icon, title, path, rootMenuId }) => {
                         const subMenuClass = twMerge(
                             "flex justify-start items-center p-2 my-1 hover:bg-slate-300 cursor-pointer rounded-md",
                             selectedMenu.id === id && "bg-stone-400"
@@ -53,7 +53,10 @@ export function SideSubmenu() {
                         return (
                             <div
                                 onClick={() => {
-                                    navigate(path);
+                                    navigate({
+                                        pathname: path,
+                                        search: createSearchParams({ rootMenuId }).toString(),
+                                    });
                                     setSelectedMenu({ id });
                                 }}
                                 key={id}

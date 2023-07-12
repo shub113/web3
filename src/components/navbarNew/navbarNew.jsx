@@ -7,7 +7,7 @@ import { NA } from "../index";
 
 export function NavbarNew() {
     const navigate = useNavigate();
-    const { pathname } = useLocation();
+    const { search } = useLocation();
 
     const [selectedItem, setSelectedItem] = useState({
         id: NavListMenuItems?.[0]?.id,
@@ -15,17 +15,9 @@ export function NavbarNew() {
     });
 
     useEffect(() => {
-        const pathArray = pathname.split("/");
-        let selectedItem = NavListMenuItems.filter((item) => {
-            if (pathArray[2]) {
-                return item.path === `${pathArray?.[1]}/${pathArray?.[2]}`;
-            }
-
-            return item.path === pathArray?.[1];
-        });
-        if (selectedItem.length === 0) {
-            selectedItem = NavListFooterItems.filter((item) => item.path === pathArray?.[1]);
-        }
+        const searchArray = search.split("=");
+        const rootMenuId = searchArray[searchArray.length - 1];
+        const selectedItem = NavListMenuItems.filter((item) => item.id === rootMenuId);
         setSelectedItem({ id: selectedItem?.[0]?.id, menuComponent: selectedItem?.[0]?.component });
     }, []);
 
