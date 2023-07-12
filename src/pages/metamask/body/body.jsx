@@ -46,8 +46,9 @@ export function Body() {
             )}
             {hasAccounts && (
                 <div className='mt-10'>
-                    Hi {user.name} ({user.email})
-                    <div className='border-2 border-gray-400 rounded-xl p-3 my-3 bg-gray-300'>
+                    Hi {user.name} You wallet has a balance of{" "}
+                    {(parseInt(wallet.balance) / 1000000000000000000).toFixed(2)}
+                    {/* <div className='border-2 border-gray-400 rounded-xl p-3 my-3 bg-gray-300'>
                         {wallet.accounts.map((account) => (
                             <div className='flex items-center gap-4' key={{ account }}>
                                 Account address : {account}
@@ -60,10 +61,10 @@ export function Body() {
                                 />
                             </div>
                         ))}
-                        <div>Wallet Balance: {wallet.balance}</div> {/* New */}
-                        <div>Hex ChainId: {wallet.chainId}</div> {/* New */}
+                        <div>Wallet Balance: {wallet.balance}</div> 
+                        <div>Hex ChainId: {wallet.chainId}</div> 
                         <div>Numeric ChainId: {wallet.chainId}</div>
-                    </div>
+                    </div> */}
                 </div>
             )}
         </div>

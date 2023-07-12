@@ -27,7 +27,6 @@ export function NavbarNew() {
             selectedItem = NavListFooterItems.filter((item) => item.path === pathArray?.[1]);
         }
         setSelectedItem({ id: selectedItem?.[0]?.id, menuComponent: selectedItem?.[0]?.component });
-        console.log("###", { pathArray, selectedItem, NavListMenuItems, NavListFooterItems });
     }, []);
 
     return (
