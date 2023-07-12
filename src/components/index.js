@@ -7,3 +7,4 @@ export { Navbar } from "./navbar/navbar";
 export { NavbarNew } from "./navbarNew/navbarNew";
 export { NavList } from "./navbar/navList";
 export { Banner } from "./banner";
+export { Card } from "./card";

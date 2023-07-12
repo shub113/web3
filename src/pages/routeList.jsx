@@ -10,6 +10,7 @@ const Metamask = lazy(() => import("./metamask/metamask").then((module) => ({ de
 const Polygonscan = lazy(() =>
     import("./polygonscan/polygonscan").then((module) => ({ default: module.Polygonscan }))
 );
+const Issue = lazy(() => import("./issue/Issue").then((module) => ({ default: module.Issue })));
 
 export const RouteList = () => (
     <Routes>
@@ -20,6 +21,7 @@ export const RouteList = () => (
             <Route path='services' element={<div>Service page</div>} />
             <Route path='dashboard' element={<Metamask />} />
             <Route path='tokens' element={<Polygonscan />} />
+            <Route path='issue' element={<Issue />} />
             <Route path='menu4' element={<div>Menu page 4</div>} />
             <Route path='menu5' element={<div>Menu page 5</div>} />
 
